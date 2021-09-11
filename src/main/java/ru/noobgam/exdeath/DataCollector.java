@@ -32,14 +32,8 @@ public class DataCollector {
 
     @SneakyThrows
     public static boolean checkUrl(String url) {
-        InetAddress[] addresses = InetAddress.getAllByName(url);
-        for (InetAddress address : addresses) {
-            if (address.isReachable(100)) {
-                logger.info("Success resolving {} to {}", url, address);
-                return true;
-            }
-            logger.warn("{} is unreachable", address);
-        }
-        return false;
+        Process p1 = java.lang.Runtime.getRuntime().exec("ping -c 1 " + url);
+        int returnVal = p1.waitFor();
+        return returnVal == 0;
     }
 }
