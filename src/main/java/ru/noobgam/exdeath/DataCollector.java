@@ -35,8 +35,10 @@ public class DataCollector {
         InetAddress[] addresses = InetAddress.getAllByName(url);
         for (InetAddress address : addresses) {
             if (address.isReachable(100)) {
+                logger.info("Success resolving {} to {}", url, address);
                 return true;
             }
+            logger.warn("{} is unreachable", address);
         }
         return false;
     }
